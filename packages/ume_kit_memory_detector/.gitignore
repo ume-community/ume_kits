@@ -27,3 +27,10 @@
 .dart_tool/
 .packages
 build/
+
+
+# Melos
+**/pubspec_overrides.yaml
+
+# Pubspec.lock
+**/pubspec.lock

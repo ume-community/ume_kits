@@ -39,3 +39,9 @@ app.*.symbols
 
 # Obfuscation related
 app.*.map.json
+
+# Melos
+**/pubspec_overrides.yaml
+
+# Pub
+**/pubspec.lock
