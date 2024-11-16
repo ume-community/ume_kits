@@ -54,7 +54,7 @@ class _SlowAnimationState extends State<SlowAnimation>
     ).animate(_animationController);
 
     WidgetsBinding.instance
-        ?.addPostFrameCallback((_) => _animationController.forward());
+        .addPostFrameCallback((_) => _animationController.forward());
   }
 
   @override
