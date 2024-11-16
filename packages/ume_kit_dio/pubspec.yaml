@@ -1,6 +1,6 @@
 name: ume_kit_dio
 description: Dio kit for ume.
-version: 2.0.0
+version: 2.0.1
 homepage: https://github.com/ume-community/ume_kits
 
 environment:
@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  dio: ^4.0.0
+  dio: ^5.7.0
 
   ume_core: ^2.0.1
 
