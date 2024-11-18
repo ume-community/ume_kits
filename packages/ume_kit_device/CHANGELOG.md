@@ -1,37 +1,15 @@
 # Changelog
 
-## 1.0.0
+[2.0.1]
 
-* 正式版
+- Update dependencies.
 
-* Normal version.
+- Add battery information.
 
-## 1.0.0-dev.0
+- Add network information.
 
-* 适配 Flutter 3
+- Add package information.
 
-* Adapt Flutter 3
+[2.0.0]
 
-## 0.3.0
-
-* 更新版本号
-
-* Update version
-
-## 0.2.1
-
-* null-safety 正式版本
-
-* Null-Safety formal version.
-
-## 0.2.0-dev.0
-
-* 适配 null-safety
-
-* Adapted Null-Safety.
-
-## 0.1.0
-
-* 发布开源版本。
-
-* Release opensource version.
+- Use ume_core.

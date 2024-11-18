@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:tuple/tuple.dart';
 import 'package:ume_core/ume_core.dart';
 import 'package:ume_kit_console/console/console_manager.dart';
@@ -254,11 +254,12 @@ class ConsoleState extends State<Console>
     _refreshConsole();
   }
 
-  Future<void> _share() async {
+  Future<ShareResult> _share() async {
     if (_logList.isEmpty) {
-      return;
+      return ShareResult.unavailable;
     }
     final l = _logList.map((e) => '${e.item1.toString()} ${e.item2}').toList();
-    return Share.share("${l.join('\n')}");
+    // return Share.share("${l.join('\n')}");
+    return await Share.share('${l.join('\n')}');
   }
 }
