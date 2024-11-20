@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:ume_kit_database_kit/ume_kit_database_kit.dart';
+import 'package:ume_kit_database/ume_kit_database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesHelper extends UmeDatabaseHelper {

@@ -1,5 +1,3 @@
-
-
 /// an string  typedef
 typedef TableName = String;
 
@@ -16,20 +14,17 @@ abstract class UMEDatabase {
 /// data update content
 abstract class UpdateConditions {
   String? get getUpdateNeedWhere;
-  List<String>? get getUpdateNeedcolumnKey;
+  List<String>? get getUpdateNeedColumnKey;
 }
 
-
-class CustomDtabase extends UMEDatabase {
-  CustomDtabase(this._databaseName);
+class CustomDatabase extends UMEDatabase {
+  CustomDatabase(this._databaseName);
   final String _databaseName;
   @override
   String get databaseName => _databaseName;
   @override
   String? get databasePath => null;
 }
-
-
 
 abstract class TableData {
   /// if it is sqlite the table name
@@ -42,7 +37,7 @@ abstract class TableData {
   Map<String, dynamic> toJson();
 }
 
-abstract class CloumnData {
+abstract class ColumnData {
   String columnName() {
     throw UnimplementedError();
   }

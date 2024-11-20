@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:data_table_2/data_table_2.dart';
-import 'package:ume_kit_database_kit/ume_kit_database_kit.dart';
+import 'package:ume_kit_database/ume_kit_database.dart';
 import 'package:flutter/material.dart';
 import 'package:ume_core/ume_core.dart';
 
@@ -10,12 +10,12 @@ import 'data/icon.dart';
 
 class DatabasePanel extends StatefulWidget implements Pluggable {
   ///need developer the databases
-  ///sqlite path is null we using databaname create database
+  ///sqlite path is null we using database name create database
   ///if isDeleteDB = [true] to we do delete the db
   ///PluginManager.instance.register(
   ///DatabasePanel(
   ///databases: [
-  ///SqliteDatabas('test.db', path: null,,isDeleteDB: true)
+  ///SqliteDatabase('test.db', path: null,,isDeleteDB: true)
   ///]
   ///))
   final List<UMEDatabase> databases;
@@ -50,7 +50,7 @@ class _DatabasePanelState extends State<DatabasePanel>
   List<bool> selected = [];
   int selectIndex = 0;
   final Color background = Colors.white;
-  //current database table datasd
+  //current database table datas
   List<TableData> tableDatas = [];
 
   //show table column data
@@ -90,7 +90,7 @@ class _DatabasePanelState extends State<DatabasePanel>
     if (_databaseManager.databases.isNotEmpty) {
       //initialization first database
       var databases = _databaseManager.databases[_currentDatabaseIndex];
-      if (databases is SqliteDatabas) {
+      if (databases is SqliteDatabase) {
         tableDatas =
             await _databaseManager.sqliteHelper.findAllTableData(databases);
         currentDatabaseType = DatabaseType.sqlite;
@@ -110,11 +110,11 @@ class _DatabasePanelState extends State<DatabasePanel>
 
   void _updateCurrentDatabaseType() {
     var databases = _databaseManager.databases[_currentDatabaseIndex];
-    if (databases is SqliteDatabas) {
+    if (databases is SqliteDatabase) {
       currentDatabaseType = DatabaseType.sqlite;
     } else if (databases is HiveDatabase) {
       currentDatabaseType = DatabaseType.hive;
-    } else if (databases is CustomDtabase) {
+    } else if (databases is CustomDatabase) {
       currentDatabaseType = DatabaseType.customDB;
     } else if (databases is SharedPreferencesDatabase) {
       currentDatabaseType = DatabaseType.sharedPreferences;
@@ -126,7 +126,7 @@ class _DatabasePanelState extends State<DatabasePanel>
   }
 
   Future<void> _updateDatabaseSelect(UMEDatabase database) async {
-    if (database is SqliteDatabas) {
+    if (database is SqliteDatabase) {
       tableDatas =
           await _databaseManager.sqliteHelper.findAllTableData(database);
     } else if (database is HiveDatabase) {
@@ -156,8 +156,8 @@ class _DatabasePanelState extends State<DatabasePanel>
     setState(() {});
   }
 
-  ///fliter an map text
-  String _fliterShowText(String text) {
+  ///filter an map text
+  String _filterShowText(String text) {
     return text.replaceAll(',', '\n').replaceAll('{', '').replaceAll('}', '');
   }
 
@@ -180,7 +180,7 @@ class _DatabasePanelState extends State<DatabasePanel>
   }
 
   //show an simple dialog
-  void _showSimleDialog(String text) {
+  void _showSimpleDialog(String text) {
     var child = Container(
       alignment: Alignment.center,
       margin: const EdgeInsets.only(top: 200, bottom: 200, left: 50, right: 50),
@@ -241,7 +241,7 @@ class _DatabasePanelState extends State<DatabasePanel>
           children: [
             buildDatabaseData(),
 
-            ///--------talbe
+            ///--------table
             buildTableData(),
 
             ///column
@@ -313,8 +313,8 @@ class _DatabasePanelState extends State<DatabasePanel>
                       behavior: HitTestBehavior.translucent,
                       onTap: () {
                         var tableData = tableDatas[_currentTableIndex];
-                        _showSimleDialog(
-                            _fliterShowText(tableData.toJson().toString()));
+                        _showSimpleDialog(
+                            _filterShowText(tableData.toJson().toString()));
                       },
                       child: const Icon(
                         Icons.info,
@@ -354,7 +354,7 @@ class _DatabasePanelState extends State<DatabasePanel>
 
     if (DatabaseType.sqlite == currentDatabaseType) {
       var database =
-          _databaseManager.databases[_currentDatabaseIndex] as SqliteDatabas;
+          _databaseManager.databases[_currentDatabaseIndex] as SqliteDatabase;
       var std = table as SqliteTableData;
       Map<String, dynamic> data = {};
       var conditions = _databaseManager.sqliteHelper.updateMap[table.name];
@@ -363,7 +363,7 @@ class _DatabasePanelState extends State<DatabasePanel>
       for (var column in std.columnData) {
         data[column.name] = '';
         if (conditions != null) {
-          if (conditions.getUpdateNeedcolumnKey.contains(column.name)) {
+          if (conditions.getUpdateNeedColumnKey.contains(column.name)) {
             data[column.name] = column.type == 'integer'
                 ? Random().nextInt(10000000)
                 : Random().nextInt(10000000).toString();
@@ -509,8 +509,8 @@ class _DatabasePanelState extends State<DatabasePanel>
   Widget buildTableColumnData() {
     return Expanded(
       child: Builder(builder: (context) {
-        List<CloumnData> columns = [];
-        //if is null to use defalut update conditions
+        List<ColumnData> columns = [];
+        //if is null to use default update conditions
         UpdateConditions? updateConditions;
         var tableData = tableDatas[_currentTableIndex];
         if (currentDatabaseType == DatabaseType.sqlite) {
@@ -603,7 +603,7 @@ class _DatabasePanelState extends State<DatabasePanel>
                                           datas[index].keys.first];
                                       assert(columnType != null,
                                           "column data type not can is null,check sharedPreferences table column data type  is right");
-                                      _sharedPreferncesDataUpdate(columnType!,
+                                      _sharedPreferencesDataUpdate(columnType!,
                                           datas[index].keys.first, text);
                                     }
                                     _updateTableSelect(tableData);
@@ -621,11 +621,11 @@ class _DatabasePanelState extends State<DatabasePanel>
     );
   }
 
-  ///if column  constains at  SqliteUpdateConditions need column keys
+  ///if column  contains at  SqliteUpdateConditions need column keys
   ///the column will not edit
   bool _enabledTextFiled(UpdateConditions conditions, String column) {
     if (conditions is SqliteUpdateConditions) {
-      return !conditions.getUpdateNeedcolumnKey.contains(column);
+      return !conditions.getUpdateNeedColumnKey.contains(column);
     } else if (currentDatabaseType == DatabaseType.sharedPreferences) {
       return column != 'key';
     }
@@ -643,7 +643,7 @@ class _DatabasePanelState extends State<DatabasePanel>
     return TextInputType.text;
   }
 
-  Future<bool> _sharedPreferncesDataUpdate(
+  Future<bool> _sharedPreferencesDataUpdate(
       ColumnDataType columnDataType, String key, Object value) async {
     return _databaseManager.sharedPreferencesHelper
         .updateKey(columnDataType, key, value);
@@ -658,12 +658,12 @@ class _DatabasePanelState extends State<DatabasePanel>
       required String tableName}) {
     ///onlyRead Map convert can write
     var data = Map<String, dynamic>.from(map);
-    //changage the column data
+    //change the column data
     data[column] = writeText;
 
     ///some conditions
     List<String> args = [];
-    for (var column in updateConditions.getUpdateNeedcolumnKey!) {
+    for (var column in updateConditions.getUpdateNeedColumnKey!) {
       if (data[column] != null) {
         args.add(data[column].toString());
       }

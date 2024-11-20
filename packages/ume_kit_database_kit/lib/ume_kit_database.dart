@@ -1,4 +1,4 @@
-library ume_kit_database_kit;
+library ume_kit_database;
 
 export 'src/database_panel.dart';
 export 'src/database_manager.dart';

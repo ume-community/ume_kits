@@ -1,4 +1,4 @@
-import 'package:ume_kit_database_kit/src/data/databases.dart';
+import 'package:ume_kit_database/src/data/databases.dart';
 import 'package:hive/hive.dart';
 
 class HiveDatabase implements UMEDatabase {
@@ -44,7 +44,7 @@ class HiveTableData<T extends UMEHiveData> implements TableData {
   }
 }
 
-class HiveColumnData implements CloumnData {
+class HiveColumnData implements ColumnData {
   HiveColumnData({required this.name});
   final String name;
   @override

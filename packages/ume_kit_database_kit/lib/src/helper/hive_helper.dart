@@ -1,6 +1,6 @@
-import 'package:ume_kit_database_kit/src/data/databases.dart';
-import 'package:ume_kit_database_kit/src/data/hive_database.dart';
-import 'package:ume_kit_database_kit/src/helper/helpers.dart';
+import 'package:ume_kit_database/src/data/databases.dart';
+import 'package:ume_kit_database/src/data/hive_database.dart';
+import 'package:ume_kit_database/src/helper/helpers.dart';
 import 'package:hive/hive.dart';
 
 class HiveHelper implements UmeDatabaseHelper {

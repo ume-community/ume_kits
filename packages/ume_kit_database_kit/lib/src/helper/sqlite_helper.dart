@@ -1,18 +1,18 @@
 import 'dart:io';
 
-import 'package:ume_kit_database_kit/src/data/databases.dart';
-import 'package:ume_kit_database_kit/src/data/sql_database.dart';
-import 'package:ume_kit_database_kit/src/helper/helpers.dart';
+import 'package:ume_kit_database/src/data/databases.dart';
+import 'package:ume_kit_database/src/data/sql_database.dart';
+import 'package:ume_kit_database/src/helper/helpers.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class SqliteHelper implements UmeDatabaseHelper {
   SqliteHelper();
 
-  late SqliteDatabas sqliteDatabas;
+  late SqliteDatabase sqliteDatabase;
   final defaultUpdateConditions = 'default_conditions';
 
-  /// delete the db, create the folder and returnes its path
+  /// delete the db, create the folder and returns its path
   Future<String> initDeleteDb(String dbName, {deleteDB = true}) async {
     final databasePath = await getDatabasesPath();
     // print(databasePath);
@@ -42,17 +42,17 @@ class SqliteHelper implements UmeDatabaseHelper {
   ///SqliteUpdate is update
   final Map<TableName, SqliteUpdateConditions?> updateMap = {
     "default_conditions": SqliteUpdateConditions(
-        updateNeedWhere: 'id = ?', updateNeedcolumnKey: ['id'])
+        updateNeedWhere: 'id = ?', updateNeedColumnKey: ['id'])
   };
 
   void addSqliteUpdateConditions(
-      Map<String, SqliteUpdateConditions> conditionss) {
-    updateMap.addAll(conditionss);
+      Map<String, SqliteUpdateConditions> conditions) {
+    updateMap.addAll(conditions);
   }
 
   Future<List<TableData>> findAllTableData(UMEDatabase umeDatabase) async {
     List<TableData> list = [];
-    if (umeDatabase is SqliteDatabas) {
+    if (umeDatabase is SqliteDatabase) {
       var tables = await umeDatabase.db
           ?.rawQuery("select * from Sqlite_master where type = 'table'");
       if (tables == null) {
@@ -64,51 +64,51 @@ class SqliteHelper implements UmeDatabaseHelper {
         dynamic type = tableMap['type'];
         dynamic name = tableMap['name'];
         dynamic tableName = tableMap['tbl_name'];
-        dynamic rootpage = tableMap['rootpage'];
+        dynamic rootPage = tableMap['rootpage'];
         dynamic sql = tableMap['sql'];
         assert(tableName != null, "tableName is not can null");
         // print(tableMap);
-        var columnData =
-            await sqliteDatabas.db?.rawQuery("PRAGMA table_info([$tableName])");
+        var columnData = await sqliteDatabase.db
+            ?.rawQuery("PRAGMA table_info([$tableName])");
         assert(columnData != null, "");
-        List<SqliteTableColumData> cloumDatas = [];
+        List<SqliteTableColumData> _columnData = [];
         for (var columnMap in columnData!) {
-          var stc = _sqliteTableCoulmInfo(columnMap);
-          cloumDatas.add(stc);
+          var stc = _sqliteTableColumnInfo(columnMap);
+          _columnData.add(stc);
         }
         var td = SqliteTableData(tableName,
             type: type,
             name: name,
-            rootpage: rootpage,
+            rootPage: rootPage,
             createSql: sql,
-            columnData: cloumDatas);
+            columnData: _columnData);
         list.add(td);
       }
     }
     return list;
   }
 
-  SqliteTableColumData _sqliteTableCoulmInfo(Map<String, Object?> columnMap) {
+  SqliteTableColumData _sqliteTableColumnInfo(Map<String, Object?> columnMap) {
     var cid = columnMap['cid'];
     var name = columnMap['name'];
     var type = columnMap['type'];
     var notNull = columnMap['notnull'];
-    var dfltValue = columnMap['dflt_value'];
+    var defaultValue = columnMap['dflt_value'];
     var pk = columnMap['pk'];
     if (cid != null) {}
 
     return SqliteTableColumData(
         cid: int.tryParse(cid.toString()) ?? 0,
-        dfltValue: dfltValue,
+        defaultValue: defaultValue,
         name: name == null ? '' : name.toString(),
-        notnull: int.tryParse(notNull.toString()) ?? 0,
+        notNull: int.tryParse(notNull.toString()) ?? 0,
         pk: int.tryParse(pk.toString()) ?? 0,
         type: type.toString());
   }
 
   Future<List<Map<String, Object?>>> findSingleTableAllData(
       String tableName) async {
-    var datas = await sqliteDatabas.db!.query(tableName);
+    var datas = await sqliteDatabase.db!.query(tableName);
     return datas;
   }
 
@@ -117,7 +117,7 @@ class SqliteHelper implements UmeDatabaseHelper {
       String? where,
       List<String>? whereArgs}) async {
     for (var map in updateMaps) {
-      await sqliteDatabas.db
+      await sqliteDatabase.db
           ?.update(tableName, map, where: where, whereArgs: whereArgs);
       // print(d);
     }

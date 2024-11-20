@@ -1,7 +1,7 @@
-import 'package:ume_kit_database_kit/src/data/shared_preferences_database.dart';
-import 'package:ume_kit_database_kit/src/helper/hive_helper.dart';
-import 'package:ume_kit_database_kit/src/helper/shared_preferences_helper.dart';
-import 'package:ume_kit_database_kit/src/helper/sqlite_helper.dart';
+import 'package:ume_kit_database/src/data/shared_preferences_database.dart';
+import 'package:ume_kit_database/src/helper/hive_helper.dart';
+import 'package:ume_kit_database/src/helper/shared_preferences_helper.dart';
+import 'package:ume_kit_database/src/helper/sqlite_helper.dart';
 import 'package:sqflite/sqflite.dart';
 import 'data/databases.dart';
 import 'data/hive_database.dart';
@@ -9,8 +9,8 @@ import 'data/sql_database.dart';
 
 class DatabaseManager {
   DatabaseManager._();
-  static DatabaseManager get _instace => DatabaseManager._();
-  factory DatabaseManager() => _instace;
+  static DatabaseManager get _instance => DatabaseManager._();
+  factory DatabaseManager() => _instance;
   late List<UMEDatabase> databases = [];
 
   late SqliteHelper sqliteHelper;
@@ -21,8 +21,8 @@ class DatabaseManager {
   ///
   Future<void> openDatabases({required List<UMEDatabase> databases}) async {
     for (var data in databases) {
-      if (data is SqliteDatabas) {
-        SqliteDatabas sqliteDataba = data;
+      if (data is SqliteDatabase) {
+        SqliteDatabase sqliteDatabase = data;
         sqliteHelper = SqliteHelper();
         var path = await sqliteHelper.initDeleteDb(data.databaseName,
             deleteDB: data.isDeleteDB);
@@ -34,11 +34,11 @@ class DatabaseManager {
             onOpen: data.onOpen,
             onUpgrade: data.onUpgrade,
             readOnly: false);
-        sqliteDataba.db = db;
-        sqliteHelper.sqliteDatabas = sqliteDataba;
-        this.databases.add(sqliteDataba);
-        if (sqliteDataba.updateMap.isNotEmpty) {
-          for (var sum in sqliteDataba.updateMap) {
+        sqliteDatabase.db = db;
+        sqliteHelper.sqliteDatabase = sqliteDatabase;
+        this.databases.add(sqliteDatabase);
+        if (sqliteDatabase.updateMap.isNotEmpty) {
+          for (var sum in sqliteDatabase.updateMap) {
             sqliteHelper.addSqliteUpdateConditions(sum);
           }
         }

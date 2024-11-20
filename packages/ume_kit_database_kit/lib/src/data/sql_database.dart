@@ -1,41 +1,41 @@
-import 'package:ume_kit_database_kit/src/data/databases.dart';
+import 'package:ume_kit_database/src/data/databases.dart';
 import 'package:sqflite/sqflite.dart';
 
-///sqlite database update nned conditions
+///sqlite database update need conditions
 /// db is sqlite database
-/// the example is incomplate!!
+/// the example is incomplete!!
 ///
-/// db.insert('test', {"table_name": "zhang", "table_size": 12,'tid':1});
-///  db.insert('test', {"table_name": "zhang", "table_size": 12,"tid":2});
+/// db.insert('test', {"table_name": "ume", "table_size": 12,'tid':1});
+///  db.insert('test', {"table_name": "ume", "table_size": 12,"tid":2});
 /// }, updateMap: [
 /// {   'test':
-///         SqliteUpdateConditions(updateNeedWhere: 'tid = ?', updateNeedcolumnKey: ['tid'])
+///         SqliteUpdateConditions(updateNeedWhere: 'tid = ?', updateNeedColumnKey: ['tid'])
 ///  }
 ///
 class SqliteUpdateConditions implements UpdateConditions {
   SqliteUpdateConditions(
-      {required this.updateNeedWhere, required this.updateNeedcolumnKey});
+      {required this.updateNeedWhere, required this.updateNeedColumnKey});
 
   /// ```
-  /// custom updaste
+  /// custom update
   /// int count = await db.update(tableTodo, todo.toMap(),
-  ///    where: '$updateNeedWhere = ?', whereArgs: [map[updateNeedcolumnKey]]);
+  ///    where: '$updateNeedWhere = ?', whereArgs: [map[updateNeedColumnKey]]);
   /// ```
   final String updateNeedWhere;
 
   /// all column are immutable
-  final List<String> updateNeedcolumnKey;
+  final List<String> updateNeedColumnKey;
 
   @override
   String get getUpdateNeedWhere => updateNeedWhere;
 
   @override
-  List<String> get getUpdateNeedcolumnKey => updateNeedcolumnKey;
+  List<String> get getUpdateNeedColumnKey => updateNeedColumnKey;
 }
 
-class SqliteDatabas implements UMEDatabase {
+class SqliteDatabase implements UMEDatabase {
   Database? db;
-  SqliteDatabas(this._databaseName,
+  SqliteDatabase(this._databaseName,
       {this.path,
       this.isDeleteDB = true,
       this.onConfigure,
@@ -69,13 +69,13 @@ class SqliteDatabas implements UMEDatabase {
 class SqliteTableData implements TableData {
   SqliteTableData(this._tableName,
       {this.createSql,
-      this.rootpage = 0,
+      this.rootPage = 0,
       this.name,
       this.type,
       required this.columnData});
   final String _tableName;
   final String? createSql;
-  final int rootpage;
+  final int rootPage;
   final String? type;
   final String? name;
   final List<SqliteTableColumData> columnData;
@@ -90,7 +90,7 @@ class SqliteTableData implements TableData {
     return <String, dynamic>{
       "Table_Name": _tableName,
       "Create_SQL": createSql,
-      "rootPage": rootpage,
+      "rootpage": rootPage,
       "type": type,
       "name": name,
       "Table_Colum": columnData.map((e) => e.columnName()).toList()
@@ -98,21 +98,21 @@ class SqliteTableData implements TableData {
   }
 }
 
-class SqliteTableColumData implements CloumnData {
+class SqliteTableColumData implements ColumnData {
   SqliteTableColumData(
       {required this.cid,
-      required this.dfltValue,
+      required this.defaultValue,
       required this.type,
       required this.name,
-      required this.notnull,
+      required this.notNull,
       required this.pk});
 
   final int cid;
   final String name;
   final String type;
   final int? pk;
-  final int? notnull;
-  final dynamic dfltValue;
+  final int? notNull;
+  final dynamic defaultValue;
 
   @override
   String columnName() {

@@ -1,9 +1,13 @@
-# ume_kit_database_kit
+# ume_kit_database
 
-## 0.0.2
+## [2.0.0]
 
-Remove snapshots in package
+- Fix spelling mistakes.
 
-## 0.0.1
+## [0.0.2]
 
-Initial commit.
+- Remove snapshots in package
+
+## [0.0.1]
+
+- Initial commit.

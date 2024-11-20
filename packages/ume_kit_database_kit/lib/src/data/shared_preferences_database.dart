@@ -1,13 +1,13 @@
-import 'package:ume_kit_database_kit/src/data/databases.dart';
+import 'package:ume_kit_database/src/data/databases.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesDatabase implements UMEDatabase {
   SharedPreferencesDatabase(this._databaseName,
-      {required this.sharedPreferences, isDedeteDB = true})
-      : _isDedeteDB = isDedeteDB,
+      {required this.sharedPreferences, isDeleteDB = true})
+      : _isDeleteDB = isDeleteDB,
         super();
   final String _databaseName;
-  final bool _isDedeteDB;
+  final bool _isDeleteDB;
 
   late final SharedPreferencesTableData tableData =
       SharedPreferencesTableData(_databaseName, sharedPreferences);
@@ -23,7 +23,7 @@ class SharedPreferencesDatabase implements UMEDatabase {
   ///if it return true,it will clear
   @override
   bool deleteDB() {
-    return _isDedeteDB;
+    return _isDeleteDB;
   }
 }
 
@@ -58,7 +58,7 @@ class SharedPreferencesTableData implements TableData {
   }
 }
 
-class SharedPreferencesColumnData implements CloumnData {
+class SharedPreferencesColumnData implements ColumnData {
   SharedPreferencesColumnData(this.name);
   final String name;
   @override
@@ -72,5 +72,5 @@ class SharedPreferencesUpdateConditions implements UpdateConditions {
   String? get getUpdateNeedWhere => null;
 
   @override
-  List<String>? get getUpdateNeedcolumnKey => null;
+  List<String>? get getUpdateNeedColumnKey => null;
 }
