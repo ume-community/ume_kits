@@ -1,16 +1,3 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
-
 # ume database plugin
 
 这个插件用于 Sqlite 和 Hive 查看等相关功能
@@ -18,36 +5,36 @@ and the Flutter guide for
 
 ```dart
 void main() async {
-  var sqldb = SqliteDatabas('test.db', path: null, isDeleteDB: true,
+  var sqlDb = SqliteDatabase('test.db', path: null, isDeleteDB: true,
       onCreate: (db, index) {
     db.execute(
         'create table test (table_name text,table_size integer,tid integer,tid1 integer,tid2 integer)');
     db.execute('create table people (name text,age integer)');
     db.insert('people', {
-      "name": "zhangzhangzhangzhangzhangzhangzhangzhangzhangzhangzhang",
+      "name": "ume",
       "age": 12
     });
     db.insert('people', {
       "name":
-          "zhazhangzhangzhangzhangzhangzhangzhangzhangzhangzhangzhangzhangng",
+          "ume",
       "age": 12
     });
     db.insert('people', {
-      "name": "zhzhangzhangzhangzhangzhangzhangzhangzhangzhangzhangzhangang",
+      "name": "ume",
       "age": 12
     });
     db.insert('test', {
-      "table_name": "zhang",
+      "table_name": "ume",
       "table_size": 12,
       'tid': 1,
       'tid1': 1,
       'tid2': 1
     });
-    db.insert('test', {"table_name": "zhang", "table_size": 12, "tid": 2});
+    db.insert('test', {"table_name": "ume", "table_size": 12, "tid": 2});
   }, updateMap: [
     {
       'test': SqliteUpdateConditions(
-          updateNeedWhere: 'tid = ?', updateNeedcolumnKey: ['tid'])
+          updateNeedWhere: 'tid = ?', updateNeedColumnKey: ['tid'])
     }
   ]);
 
@@ -55,15 +42,15 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(PersonAdapter());
   var pBox = await Hive.openBox<Person>("people");
-  pBox.put("p", Person(age: 12, name: 'xiaolaing'));
-  pBox.put("p1", Person(age: 13, name: 'xiaolaing'));
-  pBox.put("p1", Person(age: 13, name: 'xiaolaing'));
-  pBox.put("p2", Person(age: 14, name: 'xiaolaing'));
+  pBox.put("p", Person(age: 12, name: 'ume'));
+  pBox.put("p1", Person(age: 13, name: 'ume'));
+  pBox.put("p1", Person(age: 13, name: 'ume'));
+  pBox.put("p2", Person(age: 14, name: 'ume'));
 
-  ///reigster dugeg plugin
+  ///register debug plugin
   var hive = HiveDatabase([HiveBoxItem<Person>(name: 'people', box: pBox)]);
 
-  PluginManager.instance.register(DatabasePanel(databases: [sqldb, hive]));
+  PluginManager.instance.register(DatabasePanel(databases: [sqlDb, hive]));
   runApp(const UMEWidget(child: MyApp(), enable: true)); // 初始化
 }
 ```
