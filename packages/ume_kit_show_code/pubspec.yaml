@@ -1,6 +1,6 @@
 name: ume_kit_show_code
 description: Show Code kit for ume.
-version: 2.0.0
+version: 2.0.1
 homepage: https://github.com/ume-community/ume_kits
 
 environment:
@@ -10,8 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  share: ^2.0.4
-  #[Original]: vm_service: ^9.4.0
+  share_plus: ^10.1.2
   vm_service: ^14.2.5
   string_scanner: ^1.1.0
 

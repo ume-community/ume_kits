@@ -3,7 +3,7 @@ import 'package:ume_core/ume_core.dart';
 import 'package:ume_kit_show_code/show_code/page_info_helper.dart';
 import 'package:ume_kit_show_code/show_code/syntax_highlighter.dart';
 import 'package:ume_kit_show_code/show_code/icon.dart' as icon;
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ShowCode extends StatefulWidget implements Pluggable {
   const ShowCode({Key? key}) : super(key: key);
@@ -216,10 +216,10 @@ class ShowCodeState extends State<ShowCode> with WidgetsBindingObserver {
     );
   }
 
-  Future<void> _share() async {
+  Future<ShareResult> _share() async {
     if (code == null || code!.isEmpty) {
-      return;
+      return ShareResult.unavailable;
     }
-    return Share.share(code!);
+    return await Share.share(code!);
   }
 }

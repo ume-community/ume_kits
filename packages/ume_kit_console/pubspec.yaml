@@ -1,6 +1,6 @@
 name: ume_kit_console
 description: Show debugPrint kit for ume.
-version: 2.0.0
+version: 2.0.1
 homepage: https://github.com/ume-community/ume_kits
 
 environment:
@@ -14,6 +14,8 @@ dependencies:
   # share: ^2.0.4
   share_plus: ^10.1.2
   shared_preferences: ^2.3.3
+
+  talker: ^4.5.1 # 日志工具
 
   ume_core: ^2.0.1
 
