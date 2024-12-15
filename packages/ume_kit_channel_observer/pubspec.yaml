@@ -1,6 +1,6 @@
 name: ume_kit_channel_observer
 description: Channel Observer for UME Kit
-version: 2.0.0
+version: 2.0.1
 homepage: https://github.com/ume-community/ume_kits
 
 environment:

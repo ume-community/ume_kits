@@ -22,6 +22,8 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
+    namespace 'com.lijiaqi.ume_kit_channel_observer'
+    
     compileSdkVersion 31
 
     compileOptions {
