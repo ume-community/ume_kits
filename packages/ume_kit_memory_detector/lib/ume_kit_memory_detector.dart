@@ -43,6 +43,10 @@ class UmeKitMemoryDetector extends MemoryDetector implements NavigatorObserver {
   UmeKitMemoryDetector._() : super(closeMemDetector);
 
   @override
+  void didChangeTop(
+      Route<dynamic> topRoute, Route<dynamic>? previousTopRoute) {}
+
+  @override
   void didPush(Route route, Route? previousRoute) {
     _watch(route);
   }
