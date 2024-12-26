@@ -1,5 +1,9 @@
 # Changelog
 
+[2.0.2]
+
+- Add copyright information.
+
 [2.0.1]
 
 - Update dependencies.

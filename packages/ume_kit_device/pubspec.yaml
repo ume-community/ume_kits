@@ -1,6 +1,6 @@
 name: ume_kit_device
 description: Device info kit for ume.
-version: 2.0.1
+version: 2.0.2
 homepage: https://github.com/ume-community/ume_kits
 
 environment:
