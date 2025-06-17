@@ -1,6 +1,6 @@
 name: ume_kit_memory_detector
 description: Memory detector kit for UME.
-version: 2.0.1
+version: 2.0.2
 homepage: https://github.com/ume-community/ume_kits
 
 environment:
@@ -13,7 +13,7 @@ dependencies:
 
   ume_core: ^2.0.1
 
-  vm_service: ^14.2.5
+  vm_service: ^15.0.0
   path: ^1.8.0
   sqflite: ^2.0.1
 

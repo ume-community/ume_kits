@@ -1,6 +1,6 @@
 name: ume_kit_perf
 description: Performance kits for ume.
-version: 2.0.0
+version: 2.0.1
 homepage: https://github.com/ume-community/ume_kits
 
 environment:
@@ -10,8 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  #[Original]: vm_service: ^9.4.0
-  vm_service: ^14.2.5
+  vm_service: ^15.0.0
 
   ume_core: ^2.0.1
 
