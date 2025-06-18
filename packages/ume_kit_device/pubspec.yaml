@@ -1,6 +1,6 @@
 name: ume_kit_device
 description: Device info kit for ume.
-version: 2.0.2
+version: 2.0.3
 homepage: https://github.com/ume-community/ume_kits
 
 environment:
@@ -20,7 +20,7 @@ dependencies:
 
   system_info2: ^4.0.0
 
-  share_plus: ^10.1.2
+  share_plus: ^11.0.0
 
   platform: ^3.0.0
 
@@ -36,3 +36,4 @@ dev_dependencies:
       ref: 59b7580f406bb712e9d9049c8c99212946e34f65
 
 flutter:
+  uses-material-design: true
